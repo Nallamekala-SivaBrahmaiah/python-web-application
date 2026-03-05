@@ -1,0 +1,22 @@
+# Essential commands for your setup:
+docker network create mayabazar-network
+docker volume create mongodb-data
+docker build -t mayabazar-backend ./backend
+docker build -t mayabazar-frontend ./frontend
+
+# Run containers
+docker run -d --name mayabazar-mongodb --network mayabazar-network -v mongodb-data:/data/db -p 27017:27017 mongo:latest
+docker run -d --name mayabazar-backend --network mayabazar-network -p 5000:5000 -e MONGO_URI=mongodb://mayabazar-mongodb:27017/ mayabazar-backend
+docker run -d --name mayabazar-frontend --network mayabazar-network -p 80:80 mayabazar-frontend
+docker run -d \
+  --name mayabazar-mongo-express \
+  --network mayabazar-network \
+  -p 8081:8081 \
+  -e ME_CONFIG_MONGODB_SERVER=mayabazar-mongodb \
+  -e ME_CONFIG_BASICAUTH_USERNAME=admin \
+  -e ME_CONFIG_BASICAUTH_PASSWORD=admin123 \
+  --restart unless-stopped \
+  mongo-express:latest
+http://57.158.74.201/-----frontend
+http://57.158.74.201:5000/api/orders-----backend
+http://57.158.74.201:8081/db/mayabazar/orders----database --user--admin   pass--admin123

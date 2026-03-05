@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:latest
+    container_name: mayabazar_mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - mayabazar_network
+    restart: unless-stopped
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  # Backend Flask API
+  backend:
+    build: ./backend
+    container_name: mayabazar_backend
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/
+    ports:
+      - "5000:5000"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    networks:
+      - mayabazar_network
+    restart: unless-stopped
+
+  # Frontend Nginx
+  frontend:
+    build: ./frontend
+    container_name: mayabazar_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - mayabazar_network
+    restart: unless-stopped
+
+  # Mongo Express - Web UI for MongoDB (EASY to use!)
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mayabazar_mongo_express
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin123
+    depends_on:
+      - mongodb
+    networks:
+      - mayabazar_network
+    restart: unless-stopped
+
+networks:
+  mayabazar_network:
+    driver: bridge
+
+volumes:
+  mongodb_data:

@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mayabazar · Guntur's grand store</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Font Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      background-color: #fefcf9;
+      color: #1e1e2a;
+      line-height: 1.5;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 4rem 0;
+    }
+
+    .section-title {
+      font-size: 2.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      color: #1e1e2a;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 90px;
+      height: 4px;
+      background: #e47b4b;
+      margin: 0.7rem auto 0;
+      border-radius: 4px;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #e47b4b;
+      color: white;
+      font-weight: 600;
+      padding: 0.8rem 2.2rem;
+      border-radius: 60px;
+      text-decoration: none;
+      transition: 0.2s;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(228, 123, 75, 0.25);
+    }
+
+    .btn:hover {
+      background-color: #c96132;
+      transform: scale(1.02);
+    }
+
+    /* ----- HEADER ----- */
+    header {
+      background: white;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.02);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 1rem 0;
+    }
+
+    .shop-name {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #1e1e2a;
+      letter-spacing: -0.02em;
+    }
+
+    .shop-name span {
+      color: #e47b4b;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 550;
+      color: #2e2e3a;
+      font-size: 1.1rem;
+      padding-bottom: 4px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-links a:hover {
+      border-bottom-color: #e47b4b;
+      color: #e47b4b;
+    }
+
+    /* ----- HERO ----- */
+    .hero {
+      background: linear-gradient(145deg, #fff1e8, #fffcf9);
+    }
+
+    .hero .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 3rem 0 4rem;
+    }
+
+    .hero h2 {
+      font-size: 3.4rem;
+      font-weight: 750;
+      line-height: 1.2;
+      color: #1e1e2a;
+    }
+
+    .hero .tagline {
+      font-size: 1.8rem;
+      color: #5a5a6e;
+      margin: 0.8rem 0 2.2rem;
+      font-weight: 340;
+    }
+
+    /* ----- PRODUCT GRID ----- */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .product-card {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 1.5rem 1rem 1.5rem;
+      box-shadow: 0 10px 22px -8px rgba(0, 0, 0, 0.04);
+      transition: all 0.2s;
+      border: 1px solid #f3eae3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 22px 28px -12px rgba(228, 123, 75, 0.15);
+    }
+
+    .product-img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #f3ede8;
+      margin-bottom: 1.2rem;
+      border: 3px solid white;
+      box-shadow: 0 12px 22px -10px rgba(0,0,0,0.12);
+      transition: 0.2s;
+    }
+
+    .product-card:hover .product-img {
+      border-color: #e47b4b;
+    }
+
+    .product-name {
+      font-size: 1.3rem;
+      font-weight: 650;
+      margin-bottom: 0.2rem;
+    }
+
+    .product-price {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #e47b4b;
+      margin: 0.3rem 0 1rem;
+    }
+
+    .buy-btn {
+      background: #1e1e2a;
+      color: white;
+      border: none;
+      border-radius: 40px;
+      padding: 0.6rem 1.6rem;
+      font-weight: 550;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.15s;
+      width: fit-content;
+    }
+
+    .buy-btn:hover {
+      background: #33334a;
+    }
+
+    /* ----- ORDER MODAL ----- */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 2.5rem;
+      border-radius: 30px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-header h3 {
+      font-size: 1.8rem;
+      color: #1e1e2a;
+    }
+
+    .close-modal {
+      font-size: 2rem;
+      cursor: pointer;
+      color: #999;
+      transition: 0.2s;
+    }
+
+    .close-modal:hover {
+      color: #e47b4b;
+    }
+
+    .product-preview {
+      background: #fef7f2;
+      padding: 1rem;
+      border-radius: 15px;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .product-preview img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .preview-details h4 {
+      font-size: 1.2rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .preview-details p {
+      color: #e47b4b;
+      font-weight: 700;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 550;
+      color: #2e2e3a;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      border: 2px solid #f0e4dd;
+      border-radius: 15px;
+      font-size: 1rem;
+      transition: 0.2s;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #e47b4b;
+    }
+
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .quantity-btn {
+      background: #f0e4dd;
+      border: none;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .quantity-btn:hover {
+      background: #e47b4b;
+      color: white;
+    }
+
+    .quantity-value {
+      font-size: 1.2rem;
+      font-weight: 600;
+      min-width: 30px;
+      text-align: center;
+    }
+
+    .total-price {
+      background: #eef2f6;
+      padding: 1rem;
+      border-radius: 15px;
+      text-align: center;
+      margin: 1.5rem 0;
+      font-size: 1.2rem;
+    }
+
+    .total-price span {
+      color: #e47b4b;
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+
+    .submit-order {
+      width: 100%;
+      background: #e47b4b;
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 40px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .submit-order:hover {
+      background: #c96132;
+      transform: scale(1.02);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #10b981;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      transform: translateX(400px);
+      transition: transform 0.3s ease;
+      z-index: 1001;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    /* Connection Status Bar */
+    .connection-status {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #f59e0b;
+      color: white;
+      text-align: center;
+      padding: 5px;
+      font-size: 14px;
+      z-index: 1002;
+      transform: translateY(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    .connection-status.show {
+      transform: translateY(0);
+    }
+
+    .connection-status.connected {
+      background: #10b981;
+    }
+
+    .connection-status.error {
+      background: #ef4444;
+    }
+
+    /* about & contact */
+    .about-card {
+      background: white;
+      border-radius: 2rem;
+      padding: 2.5rem;
+      max-width: 850px;
+      margin: 0 auto;
+      border: 1px solid #f1e4db;
+      box-shadow: 0 6px 18px #f8f1ec;
+      font-size: 1.2rem;
+      text-align: center;
+      color: #30303e;
+    }
+
+    .contact-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2.5rem 4rem;
+      background: white;
+      padding: 2.5rem 2rem;
+      border-radius: 3rem;
+      border: 1px solid #f1e4db;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      font-size: 1.2rem;
+    }
+
+    .contact-item i {
+      font-size: 2rem;
+      color: #e47b4b;
+      width: 2.2rem;
+    }
+
+    /* footer */
+    footer {
+      background: #1c1c28;
+      color: #e0e0e6;
+      padding: 2.5rem 0;
+      margin-top: 2rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .social a {
+      color: #e47b4b;
+      font-size: 1.9rem;
+      margin: 0 0.8rem;
+      transition: 0.2s;
+    }
+
+    .social a:hover {
+      color: white;
+    }
+
+    .copyright {
+      opacity: 0.8;
+      font-size: 0.95rem;
+    }
+
+    /* mobile tweaks */
+    @media (max-width: 700px) {
+      .header-row {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .nav-links {
+        justify-content: center;
+        gap: 1.2rem;
+      }
+      .hero h2 {
+        font-size: 2.5rem;
+      }
+      .product-img {
+        width: 140px;
+        height: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Connection Status Bar -->
+  <div id="connectionStatus" class="connection-status">
+    Checking connection to server...
+  </div>
+
+  <header>
+    <div class="container header-row">
+      <div class="shop-name">Maya<span>Bazar</span></div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero section">
+      <div class="container">
+        <h2>Everything under one roof</h2>
+        <p class="tagline">dress • cycles • shoes • slippers • tea • cool drinks • kids</p>
+        <a href="#products" class="btn">Explore 30+ items</a>
+      </div>
+    </section>
+
+    <section id="products" class="section container">
+      <h2 class="section-title">Mayabazar collections</h2>
+      <div class="product-grid">
+        <!-- Product 1 -->
+        <div class="product-card" data-product-id="1" data-product-name="Silk Kurta" data-product-price="1299" data-product-img="https://images.pexels.com/photos/6311383/pexels-photo-6311383.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/6311383/pexels-photo-6311383.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Women's dress">
+          <h3 class="product-name">Silk Kurta</h3>
+          <div class="product-price">₹1,299</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 2 -->
+        <div class="product-card" data-product-id="2" data-product-name="Casual Shirt" data-product-price="899" data-product-img="https://images.pexels.com/photos/842811/pexels-photo-842811.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/842811/pexels-photo-842811.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Men's shirt">
+          <h3 class="product-name">Casual Shirt</h3>
+          <div class="product-price">₹899</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 3 -->
+        <div class="product-card" data-product-id="3" data-product-name="Kids Cycle" data-product-price="3999" data-product-img="https://images.pexels.com/photos/296735/pexels-photo-296735.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/296735/pexels-photo-296735.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Kids cycle">
+          <h3 class="product-name">Kids Cycle</h3>
+          <div class="product-price">₹3,999</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 4 -->
+        <div class="product-card" data-product-id="4" data-product-name="Gear Cycle" data-product-price="8499" data-product-img="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Gear cycle">
+          <h3 class="product-name">Gear Cycle</h3>
+          <div class="product-price">₹8,499</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 5 -->
+        <div class="product-card" data-product-id="5" data-product-name="Girls Sneakers" data-product-price="999" data-product-img="https://images.pexels.com/photos/4210853/pexels-photo-4210853.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/4210853/pexels-photo-4210853.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Girls sneakers">
+          <h3 class="product-name">Girls Sneakers</h3>
+          <div class="product-price">₹999</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 6 -->
+        <div class="product-card" data-product-id="6" data-product-name="Boys Running" data-product-price="1199" data-product-img="https://images.pexels.com/photos/7005601/pexels-photo-7005601.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/7005601/pexels-photo-7005601.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Boys running">
+          <h3 class="product-name">Boys Running</h3>
+          <div class="product-price">₹1,199</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 7 -->
+        <div class="product-card" data-product-id="7" data-product-name="Hawai Slipper" data-product-price="199" data-product-img="https://images.pexels.com/photos/1202911/pexels-photo-1202911.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/1202911/pexels-photo-1202911.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Hawai slipper">
+          <h3 class="product-name">Hawai Slipper</h3>
+          <div class="product-price">₹199</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 8 -->
+        <div class="product-card" data-product-id="8" data-product-name="Sports Floaters" data-product-price="499" data-product-img="https://images.pexels.com/photos/1082529/pexels-photo-1082529.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/1082529/pexels-photo-1082529.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Floaters">
+          <h3 class="product-name">Sports Floaters</h3>
+          <div class="product-price">₹499</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 9 -->
+        <div class="product-card" data-product-id="9" data-product-name="Samosa (2pcs)" data-product-price="40" data-product-img="https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Samosa">
+          <h3 class="product-name">Samosa (2pcs)</h3>
+          <div class="product-price">₹40</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 10 -->
+        <div class="product-card" data-product-id="10" data-product-name="Masala Tea" data-product-price="25" data-product-img="https://images.pexels.com/photos/1417943/pexels-photo-1417943.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/1417943/pexels-photo-1417943.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Masala tea">
+          <h3 class="product-name">Masala Tea</h3>
+          <div class="product-price">₹25</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 11 -->
+        <div class="product-card" data-product-id="11" data-product-name="Lemon Soda" data-product-price="35" data-product-img="https://images.pexels.com/photos/338713/pexels-photo-338713.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/338713/pexels-photo-338713.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Lemon soda">
+          <h3 class="product-name">Lemon Soda</h3>
+          <div class="product-price">₹35</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 12 -->
+        <div class="product-card" data-product-id="12" data-product-name="Chilled Cola" data-product-price="40" data-product-img="https://images.pexels.com/photos/4113901/pexels-photo-4113901.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/4113901/pexels-photo-4113901.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Cola">
+          <h3 class="product-name">Chilled Cola</h3>
+          <div class="product-price">₹40</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 13 -->
+        <div class="product-card" data-product-id="13" data-product-name="Girls Party" data-product-price="1599" data-product-img="https://images.pexels.com/photos/1530097/pexels-photo-1530097.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/1530097/pexels-photo-1530097.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Girls party">
+          <h3 class="product-name">Girls Party</h3>
+          <div class="product-price">₹1,599</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 14 -->
+        <div class="product-card" data-product-id="14" data-product-name="Boys Sandals" data-product-price="699" data-product-img="https://images.pexels.com/photos/1022493/pexels-photo-1022493.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/1022493/pexels-photo-1022493.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Boys sandals">
+          <h3 class="product-name">Boys Sandals</h3>
+          <div class="product-price">₹699</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 15 -->
+        <div class="product-card" data-product-id="15" data-product-name="Kids Frock" data-product-price="799" data-product-img="https://images.pexels.com/photos/6566324/pexels-photo-6566324.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/6566324/pexels-photo-6566324.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Kids frock">
+          <h3 class="product-name">Kids Frock</h3>
+          <div class="product-price">₹799</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 16 -->
+        <div class="product-card" data-product-id="16" data-product-name="Slim Jeans" data-product-price="1099" data-product-img="https://images.pexels.com/photos/1082528/pexels-photo-1082528.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/1082528/pexels-photo-1082528.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Men jeans">
+          <h3 class="product-name">Slim Jeans</h3>
+          <div class="product-price">₹1,099</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 17 -->
+        <div class="product-card" data-product-id="17" data-product-name="Tricycle" data-product-price="2899" data-product-img="https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Tricycle">
+          <h3 class="product-name">Tricycle</h3>
+          <div class="product-price">₹2,899</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 18 -->
+        <div class="product-card" data-product-id="18" data-product-name="Bath Slipper" data-product-price="149" data-product-img="https://images.pexels.com/photos/396777/pexels-photo-396777.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/396777/pexels-photo-396777.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Bath slipper">
+          <h3 class="product-name">Bath Slipper</h3>
+          <div class="product-price">₹149</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 19 -->
+        <div class="product-card" data-product-id="19" data-product-name="Vada Pav" data-product-price="35" data-product-img="https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Vada pav">
+          <h3 class="product-name">Vada Pav</h3>
+          <div class="product-price">₹35</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 20 -->
+        <div class="product-card" data-product-id="20" data-product-name="Ginger Tea" data-product-price="30" data-product-img="https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Ginger tea">
+          <h3 class="product-name">Ginger Tea</h3>
+          <div class="product-price">₹30</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 21 -->
+        <div class="product-card" data-product-id="21" data-product-name="Fresh Lime" data-product-price="30" data-product-img="https://images.pexels.com/photos/4955287/pexels-photo-4955287.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/4955287/pexels-photo-4955287.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Fresh lime">
+          <h3 class="product-name">Fresh Lime</h3>
+          <div class="product-price">₹30</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 22 -->
+        <div class="product-card" data-product-id="22" data-product-name="Lehenga" data-product-price="2499" data-product-img="https://images.pexels.com/photos/6311622/pexels-photo-6311622.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/6311622/pexels-photo-6311622.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Lehenga">
+          <h3 class="product-name">Lehenga</h3>
+          <div class="product-price">₹2,499</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 23 -->
+        <div class="product-card" data-product-id="23" data-product-name="School Shoes" data-product-price="849" data-product-img="https://images.pexels.com/photos/2201701/pexels-photo-2201701.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/2201701/pexels-photo-2201701.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="School shoes">
+          <h3 class="product-name">School Shoes</h3>
+          <div class="product-price">₹849</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 24 -->
+        <div class="product-card" data-product-id="24" data-product-name="Ballerina" data-product-price="749" data-product-img="https://images.pexels.com/photos/1904769/pexels-photo-1904769.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/1904769/pexels-photo-1904769.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Ballerina">
+          <h3 class="product-name">Ballerina</h3>
+          <div class="product-price">₹749</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 25 -->
+        <div class="product-card" data-product-id="25" data-product-name="MTB Cycle" data-product-price="11999" data-product-img="https://images.pexels.com/photos/100582/pexels-photo-100582.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/100582/pexels-photo-100582.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="MTB cycle">
+          <h3 class="product-name">MTB Cycle</h3>
+          <div class="product-price">₹11,999</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 26 -->
+        <div class="product-card" data-product-id="26" data-product-name="Men Chappal" data-product-price="299" data-product-img="https://images.pexels.com/photos/167706/pexels-photo-167706.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/167706/pexels-photo-167706.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Men chappal">
+          <h3 class="product-name">Men Chappal</h3>
+          <div class="product-price">₹299</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 27 -->
+        <div class="product-card" data-product-id="27" data-product-name="Samosa Chat" data-product-price="65" data-product-img="https://images.pexels.com/photos/1276639/pexels-photo-1276639.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/1276639/pexels-photo-1276639.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Samosa chat">
+          <h3 class="product-name">Samosa Chat</h3>
+          <div class="product-price">₹65</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 28 -->
+        <div class="product-card" data-product-id="28" data-product-name="Kulhad Chai" data-product-price="30" data-product-img="https://images.pexels.com/photos/3020918/pexels-photo-3020918.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/3020918/pexels-photo-3020918.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Kulhad chai">
+          <h3 class="product-name">Kulhad Chai</h3>
+          <div class="product-price">₹30</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 29 -->
+        <div class="product-card" data-product-id="29" data-product-name="Mango Shake" data-product-price="60" data-product-img="https://images.pexels.com/photos/338721/pexels-photo-338721.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/338721/pexels-photo-338721.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Mango shake">
+          <h3 class="product-name">Mango Shake</h3>
+          <div class="product-price">₹60</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+        <!-- Product 30 -->
+        <div class="product-card" data-product-id="30" data-product-name="Kids Shorts" data-product-price="399" data-product-img="https://images.pexels.com/photos/6347888/pexels-photo-6347888.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop">
+          <img class="product-img" src="https://images.pexels.com/photos/6347888/pexels-photo-6347888.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Kids shorts">
+          <h3 class="product-name">Kids Shorts</h3>
+          <div class="product-price">₹399</div>
+          <button class="buy-btn" onclick="openOrderModal(this)">Buy Now</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section container">
+      <h2 class="section-title">About Mayabazar</h2>
+      <div class="about-card">
+        <p>🌟 <strong>Mayabazar</strong> – Guntur's favourite family store since 1986! Dress materials, cycles, footwear for girls & boys, slippers, piping hot tea, cool drinks, snacks and more. One stop for the whole family. Come feel the magic.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="section container">
+      <h2 class="section-title">Visit us</h2>
+      <div class="contact-grid">
+        <div class="contact-item"><i class="fas fa-phone-alt"></i> +91 863 234 5678</div>
+        <div class="contact-item"><i class="fas fa-map-marker-alt"></i> Guntur, Andhra Pradesh 522002</div>
+        <div class="contact-item"><i class="fas fa-envelope"></i> hello@mayabazar.in</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div class="social">
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" aria-label="X"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      </div>
+      <div class="copyright">
+        © 2025 Mayabazar – Guntur's magical store
+      </div>
+    </div>
+  </footer>
+
+  <!-- Order Modal -->
+  <div id="orderModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Place Your Order</h3>
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+      </div>
+      
+      <div id="productPreview" class="product-preview">
+        <!-- Will be filled dynamically -->
+      </div>
+
+      <form id="orderForm" onsubmit="submitOrder(event)">
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" id="customerName" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-group">
+          <label>Phone Number *</label>
+          <input type="tel" id="customerPhone" placeholder="Enter 10-digit mobile number" pattern="[0-9]{10}" required>
+        </div>
+
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="customerEmail" placeholder="Enter your email (optional)">
+        </div>
+
+        <div class="quantity-selector">
+          <button type="button" class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+          <span class="quantity-value" id="quantity">1</span>
+          <button type="button" class="quantity-btn" onclick="changeQuantity(1)">+</button>
+        </div>
+
+        <div class="total-price" id="totalPrice">
+          Total: ₹<span>0</span>
+        </div>
+
+        <button type="submit" class="submit-order">Confirm Order</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <script>
+    // Auto-detect server IP - this will work with your VM's IP
+    const API_BASE_URL = `http://${window.location.hostname}:5000`;
+    console.log('🚀 Connecting to backend at:', API_BASE_URL);
+
+    // Modal and order variables
+    let currentProduct = null;
+    let currentQuantity = 1;
+    let isBackendConnected = false;
+
+    // Connection status element
+    const connectionStatus = document.getElementById('connectionStatus');
+
+    function updateConnectionStatus(connected, message) {
+      if (connected) {
+        connectionStatus.textContent = '✅ Connected to server';
+        connectionStatus.className = 'connection-status show connected';
+        isBackendConnected = true;
+        
+        // Hide after 3 seconds
+        setTimeout(() => {
+          connectionStatus.classList.remove('show');
+        }, 3000);
+      } else {
+        connectionStatus.textContent = message || '❌ Cannot connect to server. Please check backend.';
+        connectionStatus.className = 'connection-status show error';
+        isBackendConnected = false;
+      }
+    }
+
+    function openOrderModal(button) {
+      if (!isBackendConnected) {
+        showToast('⚠️ Cannot place order: Server not connected', 'error');
+        return;
+      }
+
+      const productCard = button.closest('.product-card');
+      currentProduct = {
+        id: productCard.dataset.productId,
+        name: productCard.dataset.productName,
+        price: parseInt(productCard.dataset.productPrice),
+        img: productCard.dataset.productImg
+      };
+      
+      // Reset quantity
+      currentQuantity = 1;
+      document.getElementById('quantity').textContent = '1';
+      
+      // Update product preview
+      const preview = document.getElementById('productPreview');
+      preview.innerHTML = `
+        <img src="${currentProduct.img}" alt="${currentProduct.name}">
+        <div class="preview-details">
+          <h4>${currentProduct.name}</h4>
+          <p>₹${currentProduct.price.toLocaleString()}</p>
+        </div>
+      `;
+      
+      // Update total price
+      updateTotalPrice();
+      
+      // Show modal
+      document.getElementById('orderModal').style.display = 'flex';
+      
+      // Reset form
+      document.getElementById('orderForm').reset();
+    }
+
+    function closeModal() {
+      document.getElementById('orderModal').style.display = 'none';
+    }
+
+    function changeQuantity(delta) {
+      const newQuantity = currentQuantity + delta;
+      if (newQuantity >= 1 && newQuantity <= 10) {
+        currentQuantity = newQuantity;
+        document.getElementById('quantity').textContent = currentQuantity;
+        updateTotalPrice();
+      }
+    }
+
+    function updateTotalPrice() {
+      const total = currentProduct.price * currentQuantity;
+      document.querySelector('#totalPrice span').textContent = total.toLocaleString();
+    }
+
+    async function submitOrder(event) {
+      event.preventDefault();
+      
+      if (!isBackendConnected) {
+        showToast('❌ Cannot place order: Server not connected', 'error');
+        return;
+      }
+      
+      const name = document.getElementById('customerName').value;
+      const phone = document.getElementById('customerPhone').value;
+      const email = document.getElementById('customerEmail').value;
+      
+      if (!name || !phone) {
+        showToast('Please fill in all required fields', 'error');
+        return;
+      }
+      
+      if (!/^\d{10}$/.test(phone)) {
+        showToast('Please enter a valid 10-digit phone number', 'error');
+        return;
+      }
+      
+      const orderData = {
+        product_id: parseInt(currentProduct.id),
+        name: name,
+        phone: phone,
+        email: email || null,
+        quantity: currentQuantity
+      };
+      
+      try {
+        showToast('Placing order...', 'info');
+        
+        const response = await fetch(`${API_BASE_URL}/api/order`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(orderData)
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          showToast(`✅ Order placed successfully! Order ID: ${data.order_id}`, 'success');
+          closeModal();
+        } else {
+          showToast(`❌ Error: ${data.error || 'Failed to place order'}`, 'error');
+        }
+      } catch (error) {
+        console.error('Order error:', error);
+        showToast('❌ Network error. Cannot connect to server.', 'error');
+        updateConnectionStatus(false, '❌ Lost connection to server');
+        isBackendConnected = false;
+      }
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      
+      if (type === 'success') toast.style.background = '#10b981';
+      else if (type === 'error') toast.style.background = '#ef4444';
+      else toast.style.background = '#3b82f6';
+      
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('orderModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('.nav-links a[href^="#"], .btn[href^="#"]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const id = this.getAttribute('href');
+        if (id === '#') return;
+        const target = document.querySelector(id);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Check backend connection on load
+    async function checkBackendConnection() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/health`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+          },
+          mode: 'cors',
+          cache: 'no-cache'
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          console.log('✅ Connected to backend:', data);
+          updateConnectionStatus(true, '✅ Connected to server');
+          
+          if (data.products === 0) {
+            showToast('⚠️ Database empty. Please seed the database.', 'info');
+          } else {
+            console.log(`📊 Products: ${data.products}, Orders: ${data.orders}`);
+          }
+        } else {
+          throw new Error('Backend returned error');
+        }
+      } catch (error) {
+        console.error('❌ Backend connection failed:', error);
+        console.log(`🔍 Tried connecting to: ${API_BASE_URL}`);
+        updateConnectionStatus(false, '❌ Cannot connect to server. Make sure backend is running on port 5000');
+      }
+    }
+
+    // Run connection check when page loads
+    setTimeout(checkBackendConnection, 1000);
+
+    // Also check every 30 seconds
+    setInterval(checkBackendConnection, 30000);
+  </script>
+</body>
+</html>

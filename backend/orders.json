@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "product_id": 1,
+    "product_name": "Silk Kurta",
+    "product_price": 1299,
+    "customer_name": "Nalla Siva",
+    "customer_phone": "9381372337",
+    "customer_email": "nallasiva552@gmail.com",
+    "quantity": 9,
+    "total_price": 11691,
+    "order_date": "2026-03-05T18:54:35.975089",
+    "status": "pending"
+  },
+  {
+    "id": 2,
+    "product_id": 3,
+    "product_name": "Kids Cycle",
+    "product_price": 3999,
+    "customer_name": "Nalla Siva",
+    "customer_phone": "9381372337",
+    "customer_email": "nallasiva552@gmail.com",
+    "quantity": 1,
+    "total_price": 3999,
+    "order_date": "2026-03-05T18:55:40.947370",
+    "status": "pending"
+  },
+  {
+    "id": 3,
+    "product_id": 3,
+    "product_name": "Kids Cycle",
+    "product_price": 3999,
+    "customer_name": "Nalla Siva",
+    "customer_phone": "9381372337",
+    "customer_email": "nallasiva552@gmail.com",
+    "quantity": 1,
+    "total_price": 3999,
+    "order_date": "2026-03-05T18:57:30.669120",
+    "status": "pending"
+  }
+]

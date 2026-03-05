@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mayabazar - Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #e47b4b;
+        }
+        table {
+            width: 100%;
+            background: white;
+            border-collapse: collapse;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        th {
+            background: #1e1e2a;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background: #f9f9f9;
+        }
+        .refresh-btn {
+            background: #e47b4b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .stats {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .stat-card {
+            text-align: center;
+        }
+        .stat-card h3 {
+            color: #666;
+            font-size: 14px;
+        }
+        .stat-card .number {
+            color: #e47b4b;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 Mayabazar Orders</h1>
+        
+        <button class="refresh-btn" onclick="loadOrders()">🔄 Refresh</button>
+        
+        <div id="stats" class="stats"></div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Product</th>
+                    <th>Customer Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="ordersList">
+                <tr>
+                    <td colspan="8" style="text-align: center; padding: 50px;">
+                        Loading orders...
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const API_BASE_URL = `http://${window.location.hostname}:5000`;
+
+        async function loadOrders() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/orders`);
+                const orders = await response.json();
+                
+                // Update stats
+                const totalOrders = orders.length;
+                const totalRevenue = orders.reduce((sum, o) => sum + o.total_price, 0);
+                
+                document.getElementById('stats').innerHTML = `
+                    <div class="stat-card">
+                        <h3>Total Orders</h3>
+                        <div class="number">${totalOrders}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Revenue</h3>
+                        <div class="number">₹${totalRevenue}</div>
+                    </div>
+                `;
+                
+                // Show orders
+                if (orders.length === 0) {
+                    document.getElementById('ordersList').innerHTML = `
+                        <tr>
+                            <td colspan="8" style="text-align: center; padding: 50px;">
+                                No orders yet. Go to store and buy something!
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                let html = '';
+                orders.forEach(order => {
+                    html += `
+                        <tr>
+                            <td>#${order.id}</td>
+                            <td><strong>${order.product_name}</strong></td>
+                            <td>${order.customer_name}</td>
+                            <td>${order.customer_phone}</td>
+                            <td>${order.customer_email || '-'}</td>
+                            <td>${order.quantity}</td>
+                            <td><strong>₹${order.total_price}</strong></td>
+                            <td>${new Date(order.order_date).toLocaleString()}</td>
+                        </tr>
+                    `;
+                });
+                
+                document.getElementById('ordersList').innerHTML = html;
+                
+            } catch (error) {
+                document.getElementById('ordersList').innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 50px; color: red;">
+                            Error loading orders. Make sure backend is running.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Load orders every 10 seconds
+        loadOrders();
+        setInterval(loadOrders, 10000);
+    </script>
+</body>
+</html>
