@@ -5,8 +5,6 @@ agent any
 environment {
     AWS_REGION = "us-east-1"
     ECR_REPO = "538449086740.dkr.ecr.us-east-1.amazonaws.com/siva-elastic-ecr"
-    IMAGE_BACKEND = "backend"
-    IMAGE_FRONTEND = "frontend"
 }
 
 stages {
@@ -22,7 +20,7 @@ stages {
         steps {
             sh '''
             aws ecr get-login-password --region $AWS_REGION | \
-            docker login --username AWS --password-stdin $ECR_REPO
+            docker login --username AWS --password-stdin 538449086740.dkr.ecr.us-east-1.amazonaws.com
             '''
         }
     }
@@ -31,8 +29,8 @@ stages {
         steps {
             dir('backend') {
                 sh '''
-                docker build -t $IMAGE_BACKEND .
-                docker tag $IMAGE_BACKEND:latest $ECR_REPO:$IMAGE_BACKEND
+                docker build -t backend .
+                docker tag backend:latest $ECR_REPO:backend
                 '''
             }
         }
@@ -42,8 +40,8 @@ stages {
         steps {
             dir('frontend') {
                 sh '''
-                docker build -t $IMAGE_FRONTEND .
-                docker tag $IMAGE_FRONTEND:latest $ECR_REPO:$IMAGE_FRONTEND
+                docker build -t frontend .
+                docker tag frontend:latest $ECR_REPO:frontend
                 '''
             }
         }
@@ -52,11 +50,12 @@ stages {
     stage('Push Images to ECR') {
         steps {
             sh '''
-            docker push $ECR_REPO:$IMAGE_BACKEND
-            docker push $ECR_REPO:$IMAGE_FRONTEND
+            docker push $ECR_REPO:backend
+            docker push $ECR_REPO:frontend
             '''
         }
     }
+
 }
 ```
 
