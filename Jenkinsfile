@@ -5,7 +5,7 @@ pipeline {
         AWS_REGION = "us-east-1"
         ECR_REPO = "538449086740.dkr.ecr.us-east-1.amazonaws.com/siva-elastic-ecr"
         ECR_REGISTRY = "538449086740.dkr.ecr.us-east-1.amazonaws.com"
-        SONARQUBE_SERVER = "SonarQube" // Name of your Jenkins SonarQube server
+        SONARQUBE_SERVER = "sonar-qube" // Name of your Jenkins SonarQube server
     }
 
     stages {
