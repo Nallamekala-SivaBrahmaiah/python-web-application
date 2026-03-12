@@ -16,17 +16,6 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            environment {
-                SONAR_AUTH_TOKEN = credentials('sonar-token')
-            }
-            steps {
-                withSonarQubeEnv('sonar-qube') {
-                    sh 'sonar-scanner -Dsonar.login=$SONAR_AUTH_TOKEN'
-                }
-            }
-        }
-
         stage('Login to ECR') {
             steps {
                 sh '''
