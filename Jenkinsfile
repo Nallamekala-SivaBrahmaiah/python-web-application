@@ -2,11 +2,12 @@ pipeline {
     agent any
 
     environment {
-        SONARQUBE_SERVER = 'sonar-qube'
-        SONARQUBE_TOKEN = credentials('sonar-token')
+        SONARQUBE_SERVER = 'sonar-qube' // Jenkins SonarQube server name
+        SONARQUBE_TOKEN = credentials('sonar-token') // Jenkins credential ID for Sonar token
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/Nallamekala-SivaBrahmaiah/python-web-application.git', branch: 'main'
@@ -16,10 +17,20 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh '''
+                    # Create virtual environment
                     python3 -m venv venv
+
+                    # Activate virtual environment
                     . venv/bin/activate
+
+                    # Upgrade pip and install dependencies
                     pip install --upgrade pip
-                    pip install -r requirements.txt pytest pytest-cov
+                    if [ -f requirements.txt ]; then
+                        pip install -r requirements.txt
+                    fi
+
+                    # Install testing tools
+                    pip install pytest pytest-cov
                 '''
             }
         }
@@ -50,6 +61,14 @@ pipeline {
                     waitForQualityGate abortPipeline: true
                 }
             }
+        }
+
+    }
+
+    post {
+        always {
+            echo 'Cleaning up virtual environment...'
+            sh 'rm -rf venv'
         }
     }
 }
