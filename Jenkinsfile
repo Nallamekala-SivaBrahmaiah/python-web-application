@@ -7,16 +7,6 @@ pipeline {
     }
 
     stages {
-        stage('Setup Python Environment') {
-            steps {
-                // Install venv if not already installed (Debian/Ubuntu agents)
-                sh '''
-                    sudo apt update || true
-                    sudo apt install -y python3-venv python3-pip || true
-                '''
-            }
-        }
-
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/Nallamekala-SivaBrahmaiah/python-web-application.git', branch: 'main'
@@ -29,8 +19,7 @@ pipeline {
                     python3 -m venv venv
                     . venv/bin/activate
                     pip install --upgrade pip
-                    pip install -r requirements.txt
-                    pip install pytest pytest-cov
+                    pip install -r requirements.txt pytest pytest-cov
                 '''
             }
         }
