@@ -2,73 +2,66 @@ pipeline {
     agent any
 
     environment {
-        SONARQUBE_SERVER = 'sonar-qube' // Jenkins SonarQube server name
-        SONARQUBE_TOKEN = credentials('sonar-token') // Jenkins credential ID for Sonar token
+        AWS_REGION = "us-east-1"
+        ECR_REPO = "538449086740.dkr.ecr.us-east-1.amazonaws.com/siva-elastic-ecr"
+        ECR_REGISTRY = "538449086740.dkr.ecr.us-east-1.amazonaws.com"
     }
 
     stages {
 
-        stage('Checkout') {
+        stage('Clone Repository') {
             steps {
-                git url: 'https://github.com/Nallamekala-SivaBrahmaiah/python-web-application.git', branch: 'main'
-            }
-        }
-
-        stage('Install Dependencies') {
-            steps {
-                sh '''
-                    # Create virtual environment
-                    python3 -m venv venv
-
-                    # Activate virtual environment
-                    . venv/bin/activate
-
-                    # Upgrade pip and install dependencies
-                    pip install --upgrade pip
-                    if [ -f requirements.txt ]; then
-                        pip install -r requirements.txt
-                    fi
-
-                    # Install testing tools
-                    pip install pytest pytest-cov
-                '''
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                sh '''
-                    . venv/bin/activate
-                    pytest --cov=. --cov-report=xml
-                '''
+                git branch: 'main',
+                    url: 'https://github.com/Nallamekala-SivaBrahmaiah/python-web-application.git'
             }
         }
 
         stage('SonarQube Analysis') {
+            environment {
+                SONAR_AUTH_TOKEN = credentials('sonar-token')
+            }
             steps {
-                withSonarQubeEnv(SONARQUBE_SERVER) {
-                    sh '''
-                        . venv/bin/activate
-                        sonar-scanner -Dsonar.login=${SONARQUBE_TOKEN}
-                    '''
+                withSonarQubeEnv('sonar-qube') {
+                    sh 'sonar-scanner -Dsonar.login=$SONAR_AUTH_TOKEN'
                 }
             }
         }
 
-        stage('Quality Gate') {
+        stage('Login to ECR') {
             steps {
-                timeout(time: 1, unit: 'HOURS') {
-                    waitForQualityGate abortPipeline: true
-                }
+                sh '''
+                aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY
+                '''
             }
         }
 
-    }
+        stage('Build Images') {
+            steps {
+                sh '''
+                docker build -t $ECR_REPO:backend ./backend
+                docker build -t $ECR_REPO:frontend ./frontend
+                '''
+            }
+        }
 
-    post {
-        always {
-            echo 'Cleaning up virtual environment...'
-            sh 'rm -rf venv'
+        stage('Trivy Scan Images') {
+            steps {
+                sh '''
+                # Scan backend image
+                trivy image --exit-code 1 --severity HIGH,CRITICAL $ECR_REPO:backend
+                # Scan frontend image
+                trivy image --exit-code 1 --severity HIGH,CRITICAL $ECR_REPO:frontend
+                '''
+            }
+        }
+
+        stage('Push Images') {
+            steps {
+                sh '''
+                docker push $ECR_REPO:backend
+                docker push $ECR_REPO:frontend
+                '''
+            }
         }
     }
 }
