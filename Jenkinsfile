@@ -2,43 +2,46 @@ pipeline {
     agent any
 
     environment {
-        AWS_REGION = "us-east-1"
-        ECR_REPO = "538449086740.dkr.ecr.us-east-1.amazonaws.com/siva-elastic-ecr"
-        ECR_REGISTRY = "538449086740.dkr.ecr.us-east-1.amazonaws.com"
+        SONARQUBE_SERVER = 'sonar-qube' // Name of your SonarQube server in Jenkins
+        SONARQUBE_TOKEN = credentials('sonar-token') // Jenkins credential ID for Sonar token
     }
 
     stages {
-
-        stage('Clone Repository') {
+        stage('Checkout') {
             steps {
-                git branch: 'main',
-                url: 'https://github.com/Nallamekala-SivaBrahmaiah/python-web-application.git'
+                git url: 'https://github.com/Nallamekala-SivaBrahmaiah/python-web-application.git', branch: 'main'
             }
         }
 
-        stage('Login to ECR') {
+        stage('Install Dependencies') {
             steps {
-                sh '''
-                aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY
-                '''
+                sh 'python3 -m venv venv'
+                sh '. venv/bin/activate && pip install --upgrade pip'
+                sh '. venv/bin/activate && pip install -r requirements.txt'
             }
         }
 
-        stage('Build Images') {
+        stage('Run Tests') {
             steps {
-                sh '''
-                docker build -t $ECR_REPO:backend ./backend
-                docker build -t $ECR_REPO:frontend ./frontend
-                '''
+                sh '. venv/bin/activate && pip install pytest pytest-cov'
+                sh '. venv/bin/activate && pytest --cov=. --cov-report=xml'
             }
         }
 
-        stage('Push Images') {
+        stage('SonarQube Analysis') {
             steps {
-                sh '''
-                docker push $ECR_REPO:backend
-                docker push $ECR_REPO:frontend
-                '''
+                withSonarQubeEnv(SONARQUBE_SERVER) {
+                    sh ". venv/bin/activate && sonar-scanner \
+                        -Dsonar.login=${SONARQUBE_TOKEN}"
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 1, unit: 'HOURS') {
+                    waitForQualityGate abortPipeline: true
+                }
             }
         }
     }
