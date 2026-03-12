@@ -1,8 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'python:3.12-slim' } // Python environment guaranteed
+    }
 
     environment {
-        SONARQUBE_SERVER = 'sonar-qube' // Name of your SonarQube server in Jenkins
+        SONARQUBE_SERVER = 'sonar-qube' // Your SonarQube server in Jenkins
         SONARQUBE_TOKEN = credentials('sonar-token') // Jenkins credential ID for Sonar token
     }
 
@@ -15,24 +17,32 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'python3 -m venv venv'
-                sh '. venv/bin/activate && pip install --upgrade pip'
-                sh '. venv/bin/activate && pip install -r requirements.txt'
+                sh '''
+                    python -m venv venv
+                    . venv/bin/activate
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                    pip install pytest pytest-cov
+                '''
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh '. venv/bin/activate && pip install pytest pytest-cov'
-                sh '. venv/bin/activate && pytest --cov=. --cov-report=xml'
+                sh '''
+                    . venv/bin/activate
+                    pytest --cov=. --cov-report=xml
+                '''
             }
         }
 
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv(SONARQUBE_SERVER) {
-                    sh ". venv/bin/activate && sonar-scanner \
-                        -Dsonar.login=${SONARQUBE_TOKEN}"
+                    sh '''
+                        . venv/bin/activate
+                        sonar-scanner -Dsonar.login=${SONARQUBE_TOKEN}
+                    '''
                 }
             }
         }
