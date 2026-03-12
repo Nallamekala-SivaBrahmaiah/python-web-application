@@ -5,7 +5,6 @@ pipeline {
         AWS_REGION = "us-east-1"
         ECR_REPO = "538449086740.dkr.ecr.us-east-1.amazonaws.com/siva-elastic-ecr"
         ECR_REGISTRY = "538449086740.dkr.ecr.us-east-1.amazonaws.com"
-        SONARQUBE_SERVER = "sonar-qube" // Name of your Jenkins SonarQube server
     }
 
     stages {
@@ -13,27 +12,22 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/Nallamekala-SivaBrahmaiah/python-web-application.git'
+                    url: 'https://github.com/Nallamekala-SivaBrahmaiah/python-web-application.git'
             }
         }
 
         stage('SonarQube Analysis') {
-            environment {
-                SONAR_AUTH_TOKEN = credentials('sonar-token') // Jenkins credential with your SonarQube token
-            }
             steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh '''
-                    sonar-scanner \
-                      -Dsonar.projectKey=python-web-app \
-                      -Dsonar.sources=. \
-                      -Dsonar.tests=tests \
-                      -Dsonar.python.version=3.11 \
-                      -Dsonar.sourceEncoding=UTF-8 \
-                      -Dsonar.python.coverage.reportPaths=coverage.xml \
-                      -Dsonar.exclusions=**/venv/**,**/__pycache__/**,**/migrations/**,**/docs/**,**/*.md,**/*.txt \
-                      -Dsonar.login=$SONAR_AUTH_TOKEN
-                    '''
+                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_AUTH_TOKEN')]) {
+                    withSonarQubeEnv('sonar-qube') {
+                        sh """
+                        sonar-scanner \
+                        -Dsonar.projectKey=python-web-app \
+                        -Dsonar.sources=. \
+                        -Dsonar.host.url=$SONAR_HOST_URL \
+                        -Dsonar.login=$SONAR_AUTH_TOKEN
+                        """
+                    }
                 }
             }
         }
