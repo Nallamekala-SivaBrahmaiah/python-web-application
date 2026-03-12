@@ -1,4 +1,3 @@
-add sonarqube 
 pipeline {
     agent any
 
