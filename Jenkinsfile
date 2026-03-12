@@ -1,3 +1,4 @@
+add sonarqube 
 pipeline {
     agent any
 
@@ -12,23 +13,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/Nallamekala-SivaBrahmaiah/python-web-application.git'
-            }
-        }
-
-        stage('SonarQube Analysis') {
-            steps {
-                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_AUTH_TOKEN')]) {
-                    withSonarQubeEnv('sonar-qube') {
-                        sh """
-                        sonar-scanner \
-                        -Dsonar.projectKey=python-web-app \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=$SONAR_HOST_URL \
-                        -Dsonar.login=$SONAR_AUTH_TOKEN
-                        """
-                    }
-                }
+                url: 'https://github.com/Nallamekala-SivaBrahmaiah/python-web-application.git'
             }
         }
 
