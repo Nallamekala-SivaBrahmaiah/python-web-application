@@ -1,14 +1,22 @@
 pipeline {
-    agent {
-        docker { image 'python:3.12-slim' } // Python environment guaranteed
-    }
+    agent any
 
     environment {
-        SONARQUBE_SERVER = 'sonar-qube' // Your SonarQube server in Jenkins
-        SONARQUBE_TOKEN = credentials('sonar-token') // Jenkins credential ID for Sonar token
+        SONARQUBE_SERVER = 'sonar-qube'
+        SONARQUBE_TOKEN = credentials('sonar-token')
     }
 
     stages {
+        stage('Setup Python Environment') {
+            steps {
+                // Install venv if not already installed (Debian/Ubuntu agents)
+                sh '''
+                    sudo apt update || true
+                    sudo apt install -y python3-venv python3-pip || true
+                '''
+            }
+        }
+
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/Nallamekala-SivaBrahmaiah/python-web-application.git', branch: 'main'
@@ -18,7 +26,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh '''
-                    python -m venv venv
+                    python3 -m venv venv
                     . venv/bin/activate
                     pip install --upgrade pip
                     pip install -r requirements.txt
