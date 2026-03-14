@@ -47,13 +47,20 @@ jobs:
         run: |
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:frontend-$IMAGE_TAG
 
+      - name: Install Trivy
+        run: |
+          sudo apt-get update
+          sudo apt-get install wget -y
+          wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.50.1_Linux-64bit.deb
+          sudo dpkg -i trivy_0.50.1_Linux-64bit.deb
+
       - name: Trivy Scan Backend
         run: |
-          docker run --rm aquasec/trivy image $ECR_REGISTRY/$ECR_REPOSITORY:backend-$IMAGE_TAG
+          trivy image --severity HIGH,CRITICAL $ECR_REGISTRY/$ECR_REPOSITORY:backend-$IMAGE_TAG
 
       - name: Trivy Scan Frontend
         run: |
-          docker run --rm aquasec/trivy image $ECR_REGISTRY/$ECR_REPOSITORY:frontend-$IMAGE_TAG
+          trivy image --severity HIGH,CRITICAL $ECR_REGISTRY/$ECR_REPOSITORY:frontend-$IMAGE_TAG
 
       - name: Install kubectl
         run: |
