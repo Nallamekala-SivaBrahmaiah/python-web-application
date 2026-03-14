@@ -21,7 +21,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
+      - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
@@ -47,20 +47,17 @@ jobs:
         run: |
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:frontend-$IMAGE_TAG
 
-      - name: Install Trivy
-        run: |
-          sudo apt-get update
-          sudo apt-get install wget -y
-          wget https://github.com/aquasecurity/trivy/releases/latest/download/trivy_0.50.1_Linux-64bit.deb
-          sudo dpkg -i trivy_0.50.1_Linux-64bit.deb
-
       - name: Trivy Scan Backend
-        run: |
-          trivy image --severity HIGH,CRITICAL $ECR_REGISTRY/$ECR_REPOSITORY:backend-$IMAGE_TAG
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:backend-${{ env.IMAGE_TAG }}
+          severity: HIGH,CRITICAL
 
       - name: Trivy Scan Frontend
-        run: |
-          trivy image --severity HIGH,CRITICAL $ECR_REGISTRY/$ECR_REPOSITORY:frontend-$IMAGE_TAG
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:frontend-${{ env.IMAGE_TAG }}
+          severity: HIGH,CRITICAL
 
       - name: Install kubectl
         run: |
