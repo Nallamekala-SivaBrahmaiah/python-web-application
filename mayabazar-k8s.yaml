@@ -23,7 +23,7 @@ kind: Service
 metadata:
   name: mongodb
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
     app: mongodb
   ports:
@@ -31,6 +31,7 @@ spec:
     targetPort: 27017
 
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -47,7 +48,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: nsbyadav14e/siva-maya-backend
+        image: 538449086740.dkr.ecr.us-east-2.amazonaws.com/siva-awscloud:backend
         ports:
         - containerPort: 5000
         env:
@@ -67,6 +68,7 @@ spec:
     targetPort: 5000
 
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -83,7 +85,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: nsbyadav14e/siva-maya-frontend
+        image: 538449086740.dkr.ecr.us-east-2.amazonaws.com/siva-awscloud:frontend
         ports:
         - containerPort: 80
 ---
@@ -100,6 +102,7 @@ spec:
     targetPort: 80
 
 ---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
