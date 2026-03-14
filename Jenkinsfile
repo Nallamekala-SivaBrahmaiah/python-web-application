@@ -3,8 +3,8 @@ pipeline {
 
 environment {
     AWS_REGION = "us-east-1"
-    ECR_REPO = "538449086740.dkr.ecr.us-east-1.amazonaws.com/siva-elastic-ecr"
-    ECR_REGISTRY = "538449086740.dkr.ecr.us-east-1.amazonaws.com"
+    ECR_REPO = "538449086740.dkr.ecr.us-east-2.amazonaws.com/siva-awscloud"
+    ECR_REGISTRY = "538449086740.dkr.ecr.us-east-2.amazonaws.com"
     IMAGE_TAG = "${BUILD_NUMBER}"
 }
 
@@ -13,28 +13,9 @@ stages {
     stage('Clone Repository') {
         steps {
             git branch: 'main',
-            url: 'https://github.com/Nallamekala-SivaBrahmaiah/java-web-application.git'
+            url: 'https://github.com/Nallamekala-SivaBrahmaiah/python-web-application.git'
         }
     }
-
-    stage('Maven Build') {
-        steps {
-            sh 'mvn clean package'
-        }
-    }
-    
-    stage('SonarQube Code Scan') {
-        steps {
-            withSonarQubeEnv('sona-rqube') {
-                sh '''
-                mvn sonar:sonar \
-                -Dsonar.projectKey=java-web-application \
-                -Dsonar.sources=backend,frontend,src
-                '''
-            }
-        }
-    }
-
     stage('Login to ECR') {
         steps {
             sh '''
