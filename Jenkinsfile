@@ -59,7 +59,7 @@ stages {
         steps {
             sh '''
             export KUBECONFIG=/home/ubuntu/.kube/config
-            kubectl apply -f jenkins.yaml
+            kubectl apply -f mayabazar-k8s.yaml
             '''
         }
     }
