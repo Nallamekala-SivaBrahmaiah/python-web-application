@@ -10,7 +10,7 @@ env:
   ECR_REGISTRY: 538449086740.dkr.ecr.us-east-2.amazonaws.com
   ECR_REPOSITORY: siva-awscloud
   IMAGE_TAG: latest
-  CLUSTER_NAME: siva-cluster789910
+  CLUSTER_NAME: siva-cluster-aws
 
 jobs:
   deploy:
