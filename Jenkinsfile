@@ -2,7 +2,7 @@ pipeline {
     agent any
 
 environment {
-    AWS_REGION = "us-east-1"
+    AWS_REGION = "us-east-2"
     ECR_REPO = "538449086740.dkr.ecr.us-east-2.amazonaws.com/siva-awscloud"
     ECR_REGISTRY = "538449086740.dkr.ecr.us-east-2.amazonaws.com"
     IMAGE_TAG = "${BUILD_NUMBER}"
@@ -16,6 +16,7 @@ stages {
             url: 'https://github.com/Nallamekala-SivaBrahmaiah/python-web-application.git'
         }
     }
+
     stage('Login to ECR') {
         steps {
             sh '''
@@ -28,8 +29,8 @@ stages {
     stage('Build Docker Images') {
         steps {
             sh '''
-            docker build -t $ECR_REPO:backend-$IMAGE_TAG backend/
-            docker build -t $ECR_REPO:frontend-$IMAGE_TAG frontend/
+            docker build -t $ECR_REPO:backend-$IMAGE_TAG backend
+            docker build -t $ECR_REPO:frontend-$IMAGE_TAG frontend
             '''
         }
     }
@@ -58,7 +59,6 @@ stages {
     stage('Deploy to Kubernetes') {
         steps {
             sh '''
-            export KUBECONFIG=/home/ubuntu/.kube/config
             kubectl apply -f mayabazar-k8s.yaml
             '''
         }
