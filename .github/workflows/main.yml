@@ -71,4 +71,4 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          kubectl apply -f mayabazar-k8s.yaml
+          kubectl delete -f mayabazar-k8s.yaml
