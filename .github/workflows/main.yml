@@ -31,17 +31,29 @@ jobs:
       - name: Login to ECR
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build Docker Image
+      - name: Build Backend Image
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:backend-$IMAGE_TAG ./backend
 
-      - name: Push Image to ECR
+      - name: Build Frontend Image
         run: |
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:frontend-$IMAGE_TAG ./frontend
 
-      - name: Run Trivy Scan
+      - name: Push Backend Image
         run: |
-          docker run --rm aquasec/trivy image $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:backend-$IMAGE_TAG
+
+      - name: Push Frontend Image
+        run: |
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:frontend-$IMAGE_TAG
+
+      - name: Trivy Scan Backend
+        run: |
+          docker run --rm aquasec/trivy image $ECR_REGISTRY/$ECR_REPOSITORY:backend-$IMAGE_TAG
+
+      - name: Trivy Scan Frontend
+        run: |
+          docker run --rm aquasec/trivy image $ECR_REGISTRY/$ECR_REPOSITORY:frontend-$IMAGE_TAG
 
       - name: Install kubectl
         run: |
